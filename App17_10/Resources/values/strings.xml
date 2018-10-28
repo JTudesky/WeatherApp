@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Sunshine</string>
     <string name="search">Search</string>
+    <string name="wind_label">Wind</string>
+    <string name="pressure_label">Pressure</string>
+    <string name="humidity_label">Humidity</string>  
+  
+  
 </resources>

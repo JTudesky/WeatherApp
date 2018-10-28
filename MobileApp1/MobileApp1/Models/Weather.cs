@@ -3,6 +3,7 @@ using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
+//для создания класса объекта Weather использовал app.quicktype.io
 namespace Weather.Models
 {
     public partial class Weather
@@ -51,7 +52,8 @@ namespace Weather.Models
     public partial class List
     {
         [JsonProperty("dt")]
-        public long Dt { get; set; }
+        [JsonConverter(typeof(UnixDateTimeConverter))]
+        public DateTime Dt { get; set; }
 
         [JsonProperty("main")]
         public MainClass Main { get; set; }
@@ -125,8 +127,8 @@ namespace Weather.Models
         [JsonProperty("id")]
         public long Id { get; set; }
 
-        //[JsonProperty("main")]
-        //public MainEnum Main { get; set; }
+        [JsonProperty("main")]
+        public MainEnum Main { get; set; }
 
         [JsonProperty("description")]
         public string Description { get; set; }
@@ -148,14 +150,14 @@ namespace Weather.Models
 
     public enum MainEnum { Clear, Clouds, Rain };
 
-    public partial class WeatherTest
+    public partial class Weather
     {
-        public static WeatherTest FromJson(string json) => JsonConvert.DeserializeObject<WeatherTest>(json, Models.Converter.Settings);
+        public static Weather FromJson(string json) => JsonConvert.DeserializeObject<Weather>(json, Models.Converter.Settings);
     }
 
     public static class Serialize
     {
-        public static string ToJson(this WeatherTest self) => JsonConvert.SerializeObject(self, Models.Converter.Settings);
+        public static string ToJson(this Weather self) => JsonConvert.SerializeObject(self, Models.Converter.Settings);
     }
 
     internal static class Converter

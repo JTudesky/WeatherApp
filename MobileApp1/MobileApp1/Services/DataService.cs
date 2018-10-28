@@ -6,7 +6,7 @@ namespace Weather.Services
 {
     class RequestData
     {
-        public static async Task<dynamic> RequestHttp(string queryString)
+        public static async Task<dynamic> GetDataFromService(string queryString)
         {
             HttpClient client = new HttpClient();
             var response = await client.GetAsync(queryString);
@@ -17,6 +17,7 @@ namespace Weather.Services
                 string json = response.Content.ReadAsStringAsync().Result;
                 data = JsonConvert.DeserializeObject(json);
             }
+
             return data;
         }
     }

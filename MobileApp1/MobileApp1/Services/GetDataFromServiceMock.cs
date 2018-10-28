@@ -1,20 +1,22 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
+﻿using System.IO;
+using System.Reflection;
 
 namespace Weather.Services
 {
-    class GetDataFromServiceMock
+    //Получаем Weather из файла weather.json (ответ от сервиса openweathermap)
+    public class GetDataFromServiceMock
     {
-
-        public static Task<Models.Weather> GetWeather()
+        public Weather.Models.Weather GetWeather(Assembly assembly)
         {
-
-            var source = File.ReadAllText(@"c:\response.json");
-            var parsed = JsonConvert.DeserializeObject<Dictionary<string, Models.Weather>>(source);
-
-            return null;
+            assembly = GetType().GetTypeInfo().Assembly;
+            string[] resourceNames = Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            Stream stream = assembly.GetManifestResourceStream("App17_10.Resources.weather.txt");
+            string text = "";
+            using (var reader = new System.IO.StreamReader(stream))
+            {
+                text = reader.ReadToEnd();
+            }
+            return Weather.Models.Weather.FromJson(text); ;
         }
     }
 }
